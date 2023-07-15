@@ -141,6 +141,7 @@
 #include "llvm/Transforms/Instrumentation/KCFI.h"
 #include "llvm/Transforms/Instrumentation/MemProfiler.h"
 #include "llvm/Transforms/Instrumentation/MemorySanitizer.h"
+#include "llvm/Transforms/Instrumentation/OTI.h"
 #include "llvm/Transforms/Instrumentation/PGOInstrumentation.h"
 #include "llvm/Transforms/Instrumentation/PoisonChecking.h"
 #include "llvm/Transforms/Instrumentation/SanitizerBinaryMetadata.h"
