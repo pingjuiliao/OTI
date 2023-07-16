@@ -127,6 +127,9 @@ SANITIZER_GROUP("cfi", CFI,
                 CFIDerivedCast | CFIICall | CFIMFCall | CFIUnrelatedCast |
                     CFINVCall | CFIVCall)
 
+// Object Type Integrity
+SANITIZER("oti", OTI)
+
 // Kernel Control Flow Integrity
 SANITIZER("kcfi", KCFI)
 

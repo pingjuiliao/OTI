@@ -2595,6 +2595,17 @@ void CodeGenFunction::InitializeVTablePointer(const VPtr &Vptr) {
   if (CGM.getCodeGenOpts().OptimizationLevel > 0 &&
       CGM.getCodeGenOpts().StrictVTablePointers)
     CGM.DecorateInstructionWithInvariantGroup(Store, Vptr.VTableClass);
+  
+  if (SanOpts.has(SanitizerKind::OTI)) {
+    llvm::FunctionType* OTIStoreFnTy = llvm::FunctionType::get(
+        llvm::Type::getInt32Ty(CGM.getLLVMContext()), 
+        {llvm::Type::getInt8PtrTy(CGM.getLLVMContext())}, 
+        false);
+    llvm::FunctionCallee OTIStoreFunc = CGM.CreateRuntimeFunction(
+        OTIStoreFnTy,
+        "oti_vptr_store");
+    Builder.CreateCall(OTIStoreFunc, {VTableAddressPoint});
+  }
 }
 
 CodeGenFunction::VPtrsVector

@@ -13,9 +13,11 @@ add_custom_target(llvm-rebuild
   COMMAND cd ${LLVM_DIR}/build && cmake
           -DCMAKE_BUILD_TYPE=Release
           -DLLVM_ENABLE_PROJECTS=clang
+          -DLLVM_ENABLE_RUNTIMES=compiler-rt
           -DBUILD_SHARED_LIBS=On
           -DLLVM_BUILD_TOOLS=Off
           -DLLVM_ENABLE_LTO=Off
+          -DLLVM_TARGETS_TO_BUILD=X86
           -DLLVM_ENABLE_DOXYGEN=Off
           -G "Unix Makefiles" ../llvm
   COMMAND cd ${LLVM_DIR}/build && make -j${NJOB}
