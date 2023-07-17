@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 
-#include "liboti.h"
+#include "oti.h"
 
 struct Overflowable {
   char buf[0x10];

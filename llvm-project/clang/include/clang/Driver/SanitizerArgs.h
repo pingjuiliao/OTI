@@ -96,6 +96,7 @@ public:
   bool needsDfsanRt() const { return Sanitizers.has(SanitizerKind::DataFlow); }
   bool needsSafeStackRt() const { return SafeStackRuntime; }
   bool needsCfiRt() const;
+  bool needsOtiRt() const { return Sanitizers.has(SanitizerKind::OTI); }
   bool needsCfiDiagRt() const;
   bool needsStatsRt() const { return Stats; }
   bool needsScudoRt() const { return Sanitizers.has(SanitizerKind::Scudo); }

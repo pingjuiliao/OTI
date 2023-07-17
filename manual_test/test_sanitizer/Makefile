@@ -2,7 +2,7 @@ LLVM_BIN=../../llvm-project/build/bin
 CC=$(LLVM_BIN)/clang
 CXX=$(LLVM_BIN)/clang++
 
-CFLAGS=-m64 -O0
+CFLAGS=-m64 -O0 -fsanitize=oti
 CXXFLAGS=$(CFLAGS)
 
 

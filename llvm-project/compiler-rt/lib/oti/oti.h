@@ -1,5 +1,5 @@
-#ifndef LIBOTI_H
-#define LIBOTI_H
+#ifndef OTI_H
+#define OTI_H
 
 #define OTI_ERROR_BANNER "[OTI_ERROR] "
 
@@ -23,10 +23,14 @@
 // mapped size (== num_entries * BLOCKSIZE)
 #define FIRST_LVL_SIZE NUM_FIRST_LVL_ENTRY << LOG_BLOCKSIZE  
 #define SECOND_LVL_SIZE NUM_SECOND_LVL_ENTRY << LOG_BLOCKSIZE
-int __attribute((constructor)) oti_init(void);
 
+extern "C" {
+
+int __attribute((constructor)) oti_init(void);
 void oti_vptr_store(void**);
 void oti_vptr_check(void**);
 
+void oti_hello(void);
 
-#endif  // LIBOTI_H
+} // extern "C"
+#endif  // OTI_H

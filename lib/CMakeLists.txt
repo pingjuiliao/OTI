@@ -7,8 +7,8 @@ SET(CMAKE_C_FLAGS "-Wall -shared -m64 -fPIC -O3")
 
 
 add_library(OTI OBJECT
-  liboti.cc
-  "${PROJECT_SOURCE_DIR}/include/liboti.h")
+  oti.cpp
+  "${PROJECT_SOURCE_DIR}/include/oti.h")
 
 target_include_directories(OTI PUBLIC
   ${PROJECT_SOURCE_DIR}/include)

@@ -1,4 +1,4 @@
-#include "liboti.h"
+#include "oti.h"
 
 #include <asm/prctl.h>
 #include <string.h>
@@ -30,6 +30,9 @@ int __attribute((constructor)) oti_init() {
     exit(-1);
   }
   metadata_base = NULL;
+#ifdef DEBUG
+  puts("[OTI] Metadata region Success");
+#endif
   return 0;
 }
 
@@ -147,4 +150,9 @@ void oti_vptr_check(void** vptr) {
     fprintf(stderr, "  After : %p\n", *vptr);
     exit(-1);
   }
+}
+
+
+void oti_hello(void) {
+  puts("[OTI] hello ctor");
 }
