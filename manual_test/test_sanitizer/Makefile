@@ -6,12 +6,10 @@ CFLAGS=-m64 -O0
 CXXFLAGS=$(CFLAGS)
 OTIFLAGS=-fsanitize=oti
 
-## hello testcases: check c/c++ differences
-hellos := hello_c.exe hello_cxx.exe
-
 # tests
 tests := employees_oti.exe employees.ll employees_vuln.exe
 tests += account_oti.exe account_vuln.exe
+tests += tomato_oti.exe
 .PHONY: clean
 
 all: $(hellos) $(tests)
@@ -21,9 +19,5 @@ all: $(hellos) $(tests)
 	$(CXX) $(CXXFLAGS) -o $@ $<
 %_oti.exe: %.cc
 	$(CXX) $(CXXFLAGS) $(OTIFLAGS) -o $@ $<
-hello_c.exe: hello.c
-	$(CC) $(CFLAGS) -o $@ $<
-hello_cxx.exe: hello.cc
-	$(CXX) $(CXXFLAGS) -o $@ $<
 clean:
 	rm $(wildcard *.exe) $(wildcard *.ll)
