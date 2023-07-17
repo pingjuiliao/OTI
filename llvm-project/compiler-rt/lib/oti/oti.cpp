@@ -9,8 +9,12 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-#ifndef DEBUG
-#define DEBUG
+// #ifndef DEBUG
+// #define DEBUG
+// #endif
+
+#ifndef OTI_VERBOSE
+#define OTI_VERBOSE
 #endif
 
 int __attribute((constructor)) oti_init() {
@@ -40,6 +44,10 @@ void oti_vptr_store(void** vptr) {
   void* top_entry = NULL;
   size_t top_idx = 0;
   size_t bot_idx = 0;
+
+#ifdef OTI_VERBOSE
+  printf("[OTI_STORE] map[%p] := %p\n", vptr, *vptr);
+#endif
 
 #ifdef DEBUG
   printf("oti_vptr_store: vptr == %p\n", vptr);
@@ -112,8 +120,13 @@ void oti_vptr_check(void** vptr) {
       [bot_idx] "=m"(bot_idx) 
     : [vptr] "r"(vptr)
   );
+#ifdef OTI_VERBOSE
+  printf("[OTI_CHECK] map[%p] == %p?\n", vptr, *vptr);
+#endif
 
 #ifdef DEBUG
+  printf("oti_vptr_check: vptr == %p\n", vptr);
+  printf("oti_vptr_check: *vptr == %p\n", *vptr);
   printf("oti_vptr_check: top_idx == %p\n", (void *)top_idx);
   printf("oti_vptr_check: bot_idx == %p\n", (void *)bot_idx);
 #endif

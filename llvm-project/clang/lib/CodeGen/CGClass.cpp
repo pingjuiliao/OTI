@@ -2597,14 +2597,14 @@ void CodeGenFunction::InitializeVTablePointer(const VPtr &Vptr) {
     CGM.DecorateInstructionWithInvariantGroup(Store, Vptr.VTableClass);
   
   if (SanOpts.has(SanitizerKind::OTI)) {
+    llvm::Type* Args[1] = {Int8PtrTy};
     llvm::FunctionType* OTIStoreFnTy = llvm::FunctionType::get(
-        llvm::Type::getInt32Ty(CGM.getLLVMContext()), 
-        {llvm::Type::getInt8PtrTy(CGM.getLLVMContext())}, 
-        false);
+        Int32Ty, Args, false);
     llvm::FunctionCallee OTIStoreFunc = CGM.CreateRuntimeFunction(
-        OTIStoreFnTy,
-        "oti_vptr_store");
-    Builder.CreateCall(OTIStoreFunc, {VTableAddressPoint});
+        OTIStoreFnTy, "oti_vptr_store");
+    // llvm::Value* VTableFieldPtr = Builder.CreateConstInBoundsGEP1_64(Int8PtrTy, Store->getPointerOperand(), 0);
+    llvm::Value* VTableFieldPtr = VTableField.getPointer();
+    Builder.CreateCall(OTIStoreFunc, {VTableFieldPtr});
   }
 }
 

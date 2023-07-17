@@ -1928,6 +1928,18 @@ CGCallee ItaniumCXXABI::getVirtualFunctionPointer(CodeGenFunction &CGF,
             CGM.getContext().getTargetInfo().getPointerWidth(LangAS::Default) /
             8);
   } else {
+    if (CGF.SanOpts.has(SanitizerKind::OTI)) {
+      llvm::Type* Args[1] = {CGM.Int8PtrTy};
+      llvm::FunctionType* OTICheckFnTy = llvm::FunctionType::get(
+          CGM.Int32Ty, Args);
+      llvm::FunctionCallee OTICheckFunc = CGM.CreateRuntimeFunction(
+          OTICheckFnTy, "oti_vptr_check");
+
+      Address VTableField = CGF.Builder.CreateElementBitCast(This, TyPtr);
+      llvm::Value* VTableFieldPtr = VTableField.getPointer();
+      CGF.Builder.CreateCall(OTICheckFunc, {VTableFieldPtr});
+    }
+
     CGF.EmitTypeMetadataCodeForVCall(MethodDecl->getParent(), VTable, Loc);
 
     llvm::Value *VFuncLoad;
